@@ -19,6 +19,9 @@ I wrote a hello world clojure project that I can run using instructions
 from here:
 https://clojurebridge.github.io/community-docs/docs/getting-started/helloworld/
 
-One method that clojurians because lein is so slow to run is to keep the REPL open and develop on there, and only port it over to the project when its ready.
+One method that clojurians because lein is so slow to run is to keep the 
+REPL open and develop on there, and only port it over to the project when 
+its ready.
 
-TODO - Get a clojure program working to follow along the exercises and examples in the one-armed bandit
+TODO - Get a clojure program working to follow along the exercises and 
+examples in the one-armed bandit
