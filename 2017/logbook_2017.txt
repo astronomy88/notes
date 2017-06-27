@@ -1,0 +1,23 @@
+26-jun-2017
+===========
+
+Today I installed my clojure environment on my mac. 
+Installed the following sublime packages:
+
+BracketHighlighter
+lispindent
+SublimeREPL
+paradit
+
+And installed the profiles.clj file in the ~/.lein dir via this:
+https://gist.github.com/jamesmacaulay/5603176
+
+I also followed along this setup:
+https://github.com/jasongilman/SublimeClojureSetup
+
+I wrote a hello world clojure project that I can run using instructions from here:
+https://clojurebridge.github.io/community-docs/docs/getting-started/helloworld/
+
+One method that clojurians because lein is so slow to run is to keep the REPL open and develop on there, and only port it over to the project when its ready.
+
+TODO - Get a clojure program working to follow along the exercises and examples in the one-armed bandit
