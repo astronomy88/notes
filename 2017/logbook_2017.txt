@@ -25,3 +25,15 @@ its ready.
 
 TODO - Get a clojure program working to follow along the exercises and 
 examples in the one-armed bandit
+
+28-jun-2017
+===========
+
+I installed emacs and played around with the hotkeys, and also got
+the REPL to work side-by-side. Tried using sublime to do everything
+but it wasn't playing very nice. Emacs is a LISP tool through and through.
+Here is a nice guide:
+
+http://www.braveclojure.com/basic-emacs/
+
+I should write down some of the hotkeys so I can help commit them to memory.
