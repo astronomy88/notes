@@ -37,3 +37,44 @@ Here is a nice guide:
 http://www.braveclojure.com/basic-emacs/
 
 I should write down some of the hotkeys so I can help commit them to memory.
+
+7-jul-2017
+==========
+
+Some helpful commands in emacs (C is ctrl, M is option/alt for mac/windows):
+
+C-x 3		Split into side-by-side windows
+C-x C-f 	Navigate to a file
+C-x b		Switch to a buffer
+C-x C-s		Save a buffer or file
+C-x C-f		Create new file
+M-x cider-jack	Start REPL
+C-x o		Switch curser to other window
+C-x 1		Delete all other windows except current one
+q		Kills the current stacktrace that pops up
+C-x 0		Delete current window
+C-c M-n		Switches REPL to namespace at top of current file
+C-c C-k		Compiles current clj file
+C-) or C-(	Slurping the paranthesis forward or backwards - notice shft
+C-x b		Switches between buffers
+
+9-jul-2017
+==========
+
+Creating a Project:
+$ lein new app my-stuff
+
+After adding a module to :dependencies in project.clj file, run at the tree level:
+$ lein deps 
+
+Note that the right clojure version must work with the module. Incanter wasn't installing with the newer clojure versions.
+
+Looks like incanter is outdated and doesn't work. Here is some trouble I 
+was going through, and hardly seems worth the effort for me for now:
+https://github.com/incanter/incanter/issues/332
+
+If I want to connect to a local REPL started by "lein repl", I can issue:
+M-x cider-connect
+and enter in the relevant information
+
+Since incanter is outdated, I'm going to try clojure.core.matrix
