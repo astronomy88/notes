@@ -3,3 +3,98 @@
 
 Learning Python
 
+Python is designed to be readable, and has support for Object-oriented 
+programming and functional programming, which are software-reuse mechanisms.
+
+Python code is typically 1/3 to 1/5 the size of equivalent C++ or Java code.
+This means less typing, less debugging, and less maintaining. It doesn't
+need to compile so it can run immediately.
+
+Porting between Mac and Windows is trivial.
+
+A powerful advantage is having so many 3rd-party tools. Even free NumPy has been 
+described as being more pwerful than Matlab. 
+
+Python seems to "fit your brain", in that the language is consistent and 
+its features interact in limited ways, and arise naturally from core concepts.
+
+Python adopts a minimalist approach. There is usually just one obvious way to
+approach a coding task and few less obvious alternatives. Explicit is better
+than implicit - simple is better than complex.
+
+Python was designed to get more done with less effort. It is deliberately
+optimized for speed of development. 
+
+Typing "import this" at the Python interpreter prompt gives "The Zen of Python".
+
+Python is a general-purpose programming language that blends procedural,
+functional, and object-oriented paradigms. 
+
+One downside to python is that it's not as fast as C and C++, since it's not
+a fully-compiled-low-level language. 
+
+Standard implementations of Python convert source code to byte code, and then
+interpret the byte code. Byte code allows for portability, since it is platform-
+independent. It is however not compiled all the way down to binary machine code,
+thus why it'll be slower than fully compiled languages like C. PyPy can achieve
+10x to 100x speedup by compiling further, but it's a separate and alternative
+implementation.
+
+Oftentimes, when needing speed, Python interpreter can hand off tasks to 
+compiled C code - so the Python script can run at C speed. Python's speed-of-
+development is often more important than speed-of-execution loss, especially
+as computers get faster - but sometimes you do need fast, like numeric
+programming and animation. 
+
+If we need speed, we can split the parts that need it into compiled extensions.
+Compiled extensions won't be talked much about here, but NumPy does it.
+
+Another downside is Python changing and evolving so much. It's hard to teach,
+which is why the book is so big. But it is still simpler than its alternatives
+like Java, etc...
+
+The "libraries included" approach can also have drawbacks. This includes relying
+on libraries which may not be well maintained, or not understanding completely
+a particular tool. It can be nice for beginners, though, looking to be 
+productive.
+
+It also gives falls into some open source traps - such as the personal 
+preference of the few triumphs over the common usage of the many.
+
+Python is very stable and robust, and has been around for over 25 years, and has
+a large community, with the BDFL (Benevolent Dictator for Life) at the helm 
+(Guido van Rossum). (He's the creator.)
+
+Python is written in portable ANSI C, and compiles and runs on virtually every
+platform: Linux/Unix, Windows, Mac, Cray supercomputers, Palm OS, Symbian,
+Windows Mobile, Android, iOS, etc...
+
+Python's "powers":
+
+ - Dynamic typing: Python keeps track of the types of objects the program
+ uses as it runs - no such thing as type or variable declaration anywhere.
+
+ - Automatic memory management - allocates objects and reclaims (garbage
+ collection) them - most can grow and shrink on demand. 
+
+ - Includes tools like modules, classes, and exceptions.
+
+ - Built-in object types - provides commonly used data structures - like lists,
+ dictionaries, and strings.
+
+ - Built in tools: Standard operations, like joining collections slicing,
+ sorting, mapping, etc...
+
+Python is named after Monty Python - not the snake. So there might be some
+joke references throughout the code.
+
+The author believes that freedom of expression is great for art, but lousy
+for engineering. It's harder to read and maintain if the programmer is too
+unique or ticky. A code written with too much freedom is often easier to
+write from scratch than to maintain.
+
+
+
+
+
+
