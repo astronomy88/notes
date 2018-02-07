@@ -94,6 +94,108 @@ unique or ticky. A code written with too much freedom is often easier to
 write from scratch than to maintain.
 
 
+6-feb-2018
+==========
+
+Python is a programming language, but it's also a software package called an
+interpreter. The interpreter reads the program an carries out the instructions.
+It's a layer of software logic between the code and the hardware.
+
+Depending on how it's ran, the Python interpreter can be a C program, a set of
+Java classes, or otherwise. 
+
+A Python interpreter must be installed on the computer.
+
+Python program files end in .py, but technically speaking, only files that need
+to be imported need to have this extension. Regardless, all python scripts and 
+files are given the .py extension for consistency.
+
+When a python program is executed, it is first converted to byte code. Byte code
+is a lower-level representation of the source code. Byte code is ran faster than
+source code. This byte code is stored with a .pyc extension. 
+
+Before Python3.2, the byte code is saved with .pyc extension in the same 
+directory as the source code files. In Python3.2 and later, these .pyc files
+are stored in a new subdirectory called __pycache__
+
+The byte code is recreated if the source code changes, and this is 
+monitored through the timestamp. Not recreating the byte code saves the time in
+the compilation step. If python is being ran with a different version, then
+the byte code is also recreated.
+
+If python can't write the byte code to the machine, for instance if it doesn't
+have the permission, then it will generate it in memory and it will be discarded
+when the program exits.
+
+To run a program, all you really need are the byte code files - and these can
+be shipped around as "frozen binaries" if included with the PVM (described 
+below).
+
+Byte code is only saved for files that are imported - not for top level files
+that are only ran as scripts. It's an import optimization.
+
+Byte code is never saved for code typed at the interactive prompt.
+
+Once the byte code is loaded from .pyc files, it is shipped off for execution 
+to the Python Virtual Machine (PVM). The PVM just runs through the byte code 
+instructions.
+
+Most of this stuff is hidden from the programmer.
+
+Compared to C/C++, there's no build or "make" step - the code run immediately 
+after it is written. Also, byte code is not binary machine code, which are 
+instructions for an Intel chip for instance. Byte code is a Python-specific 
+representation. It's also why Python is slower than C/C++, but still faster 
+than traditional interpreted languages (because of the internal compile step).
+
+The systems that compile and execute the source code in Python are the same. 
+This is different than languages like C/C++. It makes the development cycle
+faster - no need to precompile and link.
+
+The eval and exec built-ins can run string containing Python code - it allows 
+for changes to the Python program on the fly without having to compile the 
+whole system. There is only runtime, and not compile time. Everything happens
+as the program is running. 
+
+The execution model just described is not a requirement of Python, and there 
+are a few variants. The most common are CPython, Jython, IronPython, Stackless,
+and PyPy. All of them implement the same Python language but are executed 
+differently. The one used in this book is CPython, which is really the standard.
+The other implementations have specific purposes, such as direct access to Java 
+(Jython) or .NET (IronPython).
+
+CPython is coded in portable ANSI C language. Because it is standard, it tends 
+to be the fastest, more complete, and more up-to-date. 
+
+Jython allows .py text files to compile to Java byte code to be shipped to
+the JVM. Jython makes python code feel like a true Java program at runtime.
+
+Stackless Python allows for concurrency and provides for efficient 
+multiprocessing options. The microthreads that Stackless adds are an efficient 
+and lightweight alternative to Python's standard multitasking tools such as 
+threads and processes. 
+
+PyPy is focused on performance, and has a fast Python JIT (just-in-time) 
+compiler. It includes Stackless Python's systems to support massive concurrency. 
+It translates portions of the byte code all the way to binary code for faster 
+execution. It does this as the program is running, not as a precompiled step. 
+It keeps track of the data types of the objects that the program processes, and 
+the program runs faster and faster as it executes. It can even take up less 
+memory. It runs most CPython code C extension modules generally need to be 
+recompiled. There is also some non-traditional garbage collection where files 
+may need to be manually flushed. It's claimed to be a 5.7x speedup over CPython.
+It can sometimes run as fast as C code, and occasionally faster. 
+
+(Looking on the internet, NumPy is pretty fast and I wouldn't need to bother 
+with PyPy when I'm doing NumPy numberic stuff.)
+
+There are methods to get "frozen binaries", so that you can ship your program 
+around, but are not true compilers. For Windows, there is py2exe, and for 
+Mac OSx there is py2app. It's not the same as a true compiler - they run byte 
+code through a virtual machine, and run at the same speed as the original 
+source files. 
+
+
 
 
 
