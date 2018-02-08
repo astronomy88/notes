@@ -195,6 +195,82 @@ Mac OSx there is py2app. It's not the same as a true compiler - they run byte
 code through a virtual machine, and run at the same speed as the original 
 source files. 
 
+7-feb-2018
+==========
+
+The Python interpreter prints the result after each command. For instance, 
+you can just type "2 ** 8", instead of "print(2 ** 8)". The code is executed 
+immediately after pressing the Enter key. 
+
+At the Python interactive prompt, if you do a compound statement (like
+multiline), then pressing Enter twice runs the statement (or submitting a blank 
+statement). This means you can't cut and paste multiple lines of code - unless 
+the code includes blank lines after each compound statement. It's better to 
+run this type of code in a file. 
+
+You write your code into files, called modules. It's also refer to as a program,
+which is a series of precoded statements, intended for repeated execution. 
+
+The following is stream redirection and the output lines are saved in a file:
+
+% python script1.py > saveit.txt 
+
+When importing, Python omits the ".py" extension and the directory path, 
+like so:
+
+$ import script1 
+
+To make a Unix-style executable script, start the script off with a hashbang 
+followed by the path to the Python interpreter, e.g.,
+
+#!/usr/local/bin/python 
+
+Then give it executable priviliges, and you can run it in an executable way. 
+This is a special thing that you can do on Unix. Unix looks for the firt line 
+of a script with the #! pattern to find an interpreter for running the program. 
+The usual naming convention for executable is not to have a .py extension, 
+to make it clear that no other modules will import this file, and that it is 
+also an executable. 
+
+To avoid hardcoding the path to the Python interpreter, you can use the env 
+program which locates the Python interpreter according to the system search 
+path settings - usually by looking at directories listed in the PATH environment 
+variable:
+
+!#/usr/bin/env python 
+
+This actually makes it more portable, and is actually recommended - some 
+platforms could install Python elsewhere. However, it assumes that env will 
+live on the same path everywhere, which isn't always the case (sbin instead of 
+bin).
+
+No special code or syntax is required to make a file a module - just that the 
+extension needs to be ".py". 
+
+The typical Python architecture is a top-level script that runs line by line 
+and and import tools from other modules files, which may in turn import tools 
+from other module files, etc... 
+
+Import only runs once per session - they are to expensive to repeat, since 
+they find files, compile them to byte code, and run the code. 
+
+>>> import script1
+
+Running the import again is possible, by calling the reload function in the 
+imp standard library:
+
+>>> from imp import reload 
+>>> reload(script1)
+
+The from statement copies a name out of a module, so you can use it as if the 
+module was defined in the current script (e.g., you don't have to write: 
+imp.reload(script1))
+
+This allows for editting new code on the fly. 
+
+
+
+
 
 
 
