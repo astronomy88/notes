@@ -268,7 +268,60 @@ imp.reload(script1))
 
 This allows for editting new code on the fly. 
 
+8-feb-2018
+==========
 
+Whereas import is a statement, reload is a function. Reload requires that import 
+has worked successfully before. Before Python 3.X, reload used be a built-in 
+function but now it is a module in the imp standard library. 
+
+Names loaded with from are not updated by reload - only with import or 
+model.attribute.
+
+A module is mostly a package of variables names, known as a namespace. The 
+names within that package are called attributes. An attribute is a variable
+name attached to a specific object, like a module. 
+
+The dot expression syntax, object.attribute, lets you fetch any attribute 
+attached to an object. 
+
+If you don't want to use "object.attribute" but maybe just "attribute" only,
+then you can do: 
+
+>>> from myfile import title
+>>> title
+
+"from" is just like import, but copes a module's attribuets so that they become
+simple variables in the current script. So "title" becomes a variable, instead 
+of using myfile.title which is an attribute reference. 
+
+While import can run the whole script, from only takes the specified attributes.
+
+The dir function shows all the names available inside a module as a list.
+
+Builtin attributes shown by the dir function lead and trail with "__", like:
+'__builtin__' or '__file__'. This will be explained further later. They are 
+predefined and ahve special meaning. 
+
+Python programs are made of multiple module files linked together by import statements. One file cannot see other names in another file unless it's imported. Each file is a namespace. Names in one file cannot clash with those in another.
+
+"from" causes names to be overwritten. It also "defeats the purpose" of namespaces. Some people are hardcore and only use import.
+
+Using reload purely for updating code in place can get out of hand - it only reloads the module in question, but not the imports that that module needs to reload.
+
+Another way to run code is through exec, which runs the code anew - and it doesn import the module. For instance:
+
+>>> exec(open('script1.py').read())
+
+But it has the potential to silently overwrite variables currently in use. It's a poor namespace best practice. If you're going to use exec, it's so much typing that it's just better to run the script at the command line.
+
+IDLE is the standard and included Python integrated development environment (IDE). It's a play off the name of a Monty Python member, Eric Idle.
+
+This launches the IDLE:
+
+$ python -m idlelib.idle 
+
+You can use python -i to run the program in interactive mode. 
 
 
 
