@@ -323,9 +323,367 @@ $ python -m idlelib.idle
 
 You can use python -i to run the program in interactive mode. 
 
+10-feb-2018
+===========
 
+Chapter 4
 
+Everything is an object in a Python script. Objects are pieces of memory, with values and sets of associated operations. 
 
+Unlike some other languages like C/C++, Python ahs some powerful built-in objects that are ready to use, instead of implementing objects that have to deal with memory or writing setters and getters.
 
+Here are 4 reasons why built-in objects are cool:
 
+  - They make programs easy to write. We are given powerful tools liks lists and dictionaries.
+  - They are components of extensions. Objects implemented by you are often built on top of built-in object types such as lists and dictionaries.
+  - They are more efficient than custom data structures. They are usually implemented in C for speed and use opt-mized data structure algorithms. 
+  - They are a standard part of the language.
 
+Literals are expressions that generate objects. For instance, 'spam' is a literal expression that generates and returns a string. 
+
+Lists are collections of ordered objects, and dictionaries store objects by key. Both of these types can be nested and can grow or shrink on demand. 
+
+Core data types are those built into the Python language, such as Numbers, Strings, Lists, Dictionaries, Tuples, Files, Sets, Booleans, None, etc... 
+
+Once you create an object, you bind its operation on the set for all time. For instance, only string operations can work on a string. 
+
+Python is a dynamically typed language, which means that the language automatically keeps track of the types instead of requiring declaration code. However, it is strongly typed in the sense that once the object is created, there is a constraint that only the operatations that are valid for its type can be performed. 
+
+Numbers: Operations include +, -, /, *, and **, where ** is the exponential operation. Python 3.X integer type automatically includes extra precision for large numbers when needed, as opposed to Python 2.X where a separate long integer type handles large numbers. 
+
+str and len work on many object types, and this will be elaborated upon further throughout the book. 
+
+In older version of python, before Python 2.7 and Python 3.1, the result of a value could look odd because it's being shown in full precision, i.e.,
+
+>>> 3.1415 * 2
+6.2830000000000004
+
+It's a display issue. It's being shown as an object's as-code repr. If we convert it to str, it will be more user-friendly. The latest versions display themselves more intelligently:
+
+>>> 3.1415 * 2
+6.283
+
+String can store textual information, like a name, but can also store an arbitrary collection of bytes, such as an image file's contents. They are a sequence, which maintains left-to-right order, and their items are stored and detched by their relative positions. Strings are sequences of one-character strings.
+
+Indexes are coded as offets from the start, and start from 0. 
+
+Python variables never need to be declared ahead of time, and is created when a value is assigned to it. It can be assigned any type of object, and is replaced with its value when it shows up in an expression.
+
+Positive indexes count from the left, and negative count from the right.
+S[-1] gets the last item from the end, and S[-2] gets the 2nd to last item in the end. Another way to look at it is that the negative index is added to the string's length. 
+
+Slicing is taking from index a to index b, not including b, and returns a new string. For instance:
+S = 'Spam'. Then S[1:3] = 'pa'. [a,b)
+
+In slice, the left bound defaults to 0, and the right bound defaults to length of the string. For instance,
+
+S[1:] = 'pam'
+S = 'Spam'
+S[0:3] = 'Spa'
+S[:3] = 'Spa'
+S[:-1] = 'Spa'
+S[:] = 'Spam'
+
+The + operation is makes use of a property called polymorphism, where it can mean different things for different objects. For instance, for numbers it is addition, and for strings it is concatentation. This helps for much of the conciseness and flexibility in the code. 
+
+Strings are immutable in Python, meaning that they cannot be changed in place after they are created. You can never overwrite values of immutable objects. For instance, if you try S[0] = 'z', you will get an error. 
+
+An object is either immutable or not. Immutable objects of core types include numbers, strings, and tuples. Mutable objects include lists, dictionaries, and sets. They can be changed in place, as can most new objects that we create with classes. Immutability guarantees that an object remains constant throughout the program. 
+
+You can change text-based data in place if you expand it into a list of individual characters and join it back together, or use the newer bytearray type available in Python 2.6, 3.0 and later.
+
+>>> B = bytearray(b'spam')
+>>> B.extend(b'eggs')
+>>> B
+bytearray(b'spameggs')
+>>> B.decode()
+'spameggs'
+>>> B[1] = ord('x')
+>>> B.decode()
+'sxameggs'
+
+bytearray supports only text whose characters are at most 8-bits wide (aka ASCII). Bytearray is a special hybrid of immutable bytes strings.
+
+Strings have their own operations, known as methods. Methods are functions that are attached to and act upon a specific object, which are triggered with a call expression. 
+
+find returns the offset of the passed-in string, or -1 if it's not there.
+replace changes the pass-in string and replaces with another passed-in string.
+
+Both of the above methods return new strings as results, since strings are immmutable. 
+
+Other useful string methods:
+
+split, upper, lower, isalpha, isdigit, rstrip (removes whitespace, including new line, on the right side)
+
+The following string expressions work for Python 3.1+:
+
+>>> '%s, eggs, and %s' % ('spam', 'SPAM!')
+'spam, eggs, and SPAM!'
+>>> '{0}, eggs and {1}'.format('spam', 'SPAM!')
+'spam, eggs and SPAM!'
+>>> '{}, eggs, and {}'.format('spam', 'SPAM!')
+'spam, eggs, and SPAM!'
+
+Formatting is rich in features, and we'll postpone it for later in the book. But you can do fancy things with numbers:
+
+>>> '{:,.2f}'.format(296999.2567)
+'296,999.26'
+>>> '%.2f | %+05d' % (3.14159, -42)
+'3.14 | -0042'
+
+As a rule of thumb, generic operations that work on multiple types are usually built-in functions, such as len(x) or X[0], while type-specific operations show up as method calls, like aString.upper().
+
+For more details about an object, you can use dir:
+
+>>> dir(x)
+['__add__', '__class__', '__contains__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'capitalize', 'casefold', 'center', 'count', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'format_map', 'index', 'isalnum', 'isalpha', 'isdecimal', 'isdigit', 'isidentifier', 'islower', 'isnumeric', 'isprintable', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'maketrans', 'partition', 'replace','rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
+
+The double underscores '__' represent the implementation of the string object and are available to support customization. We can overload operators.
+
+For example, __add__ is what really performs concatenation. Python maps the first of the following to the second internally. These two are the same:
+
+>>> S = 'Spam'
+>>> S + 'NI!'
+'SpamNI!'
+>>> S.__add__('NI!')
+'SpamNI!'
+
+Leading and trailing double underscores are Python conventions for implementation details. The names without underscores are callable methods on string objects. 
+
+To see what the methods from dir do, you can use the help function:
+
+Help on built-in function replace:
+
+>>> help(S.replace)
+replace(...) method of builtins.str instance
+    S.replace(old, new[, count]) -> str
+
+    Return a copy of S with all occurrences of substring
+    old replaced by new.  If the optional argument count is
+    given, only the first count occurrences are replaced.
+
+help is one of a handful of interfaces to a system of code that ships with Python known as PyDoc - a tool for extracting documentation from objects.
+
+It's better to ask help on a specific method, and not the object itself.
+
+>>> help(S)
+No Python documentation found for 'Spam'.
+Use help() to get the interactive help utility.
+Use help(str) for help on the str class.
+
+Special characters can be represented as backslash escape sequences, which Python displays in \xNN hexadecimal escape notation. 
+
+Python can do single quotes or double quotes - apparently most programmers prefer single quotes. 
+
+Using three of such quotes (either single or double) allows for multiline string literals. The new lines are added wherever the line breaks occur. 
+
+There are also raw string literals, that turn off blackslash escapes, which can be useful for directory paths: r'C:\text\new'
+
+Python comes with full Unicode support. In Python 3.X, the str string handles Unicode text, including ASCII which is a simple kind of Unicode. It also has a distinct bytes string type that represents raw byte values, which includes media and encoded text. 
+
+Bytes don't apply to Unicode because some encodings include character code points that are too large for a byte. Even simple 7-bit ASCII text is not stored one byte per character under some encodings and memory storage schemes.
+
+Python 3.X support non-ASCII characters with \x hexadecimal and short \u and long \U Unicode escapes, and file-wide encodings. Here's an example of a non-ASCII character coded three ways in 3.X:
+
+>>> 'sp\xc4\u00c4\U000000c4m'
+'spÄÄÄm'
+
+In Python 3.X, normal strings are Unicode, and byte strings have to be called out. In Python 2.X, normal strings are byte strings, and Unicode has to be called out. In Python 3.X, Unicode strings are never allowed to mix with byte strings without explicit conversion - this was not so in Python 2.X.
+
+Str (Unicode) gets encoded to bytes. Bytes get decoded to str (unicode) - Python 3.X.
+
+Text is encoded to bytes when stored in a file, and decoded to characters (aka code points) when read back into memory. When it is loaded, it is usually processed as strings in decoded form only. 
+
+This means that files are content-specific in Python 3.X - text files implement named encodings adn accept and return str strings, and binary fiels deal with bytes strings for raw binary data. Python 2.X has a special codecs module to handle Unicode type in normal fiels content, which is in str bytes.
+
+None of the string object's own methods support pattern-based matching. To do that, we need to import the re module. It has analogous calls for searching, splitting, and replacement, but can use patterns to specify substrings. 
+
+Lists are like arrays in other languages, but are more powerful. They have no fixed type constraint - for instance, a single list can contain eleemnts of three different object types. They also have no fied size. 
+
+Lists are mutable so they can be changed in place instead of creating a new one.
+
+Python core data types support nesting, and can be nested in any combination and as deeply as desired. For instance, making a matrix can be a list of lists. For serious number crunching though, it's better to use NumPy and SciPy systems, which can store and process large matrixes. NumPy has been said to turn Python into a more powerful Matlab system.
+
+List comprehension expressions are a powerful way to process structures like a matrix. Suppose M:
+
+ >>> M = [[1, 2, 3],
+...      [4, 5, 6],
+...      [7, 8, 9]]
+>>> M
+[[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+>>> M[1]
+[4, 5, 6]
+>>> [row[1] for row in M]
+[2, 5, 8]
+
+List comprehensions derive from set notation, and built a new list. They are surrounded by square brackets to let you know they are returning a list. The previous command says "give me row[1] for each row in Matrix M as a new list". In other words, "give me the 2nd item (index 1) for each row (list) in list M as a new list".
+
+List comprehensions can be more complicated:
+
+>>> [row[1] for row in M if row[1] % 2 == 0]
+[2, 8]
+
+List comprehensions can be used to tierate over any iterable object.
+
+Getting the diagonal:
+>>> [M[i][i] for i in [0,1,2]]
+[1, 5, 9] 
+
+In more recent Python versions, like the one I'll likely be using, comprehension syntax isn't limited to just creating lists. When enclosed in paranthesis, they can be used to create generators that produce results on demand. For instance:
+
+>>> G = (sum(row) for row in M)
+>>> next(G)
+6
+>>> next(G)
+15
+>>> next(G)
+24
+
+The map built-in generates results of running items through a function one at a time. The following sums each row through map, and the results are returned as a list:
+
+>>> list(map(sum, M))
+[6, 15, 24]
+
+Comprehension syntax can be used to create sets:
+
+>>> {sum(row) for row in M}
+{24, 6, 15}
+
+and dictionaries:
+
+>>> {i:sum(M[i]) for i in [0,1,2]}
+{0: 6, 1: 15, 2: 24}
+>>> {i:sum(M[i]) for i in range(3)}
+{0: 6, 1: 15, 2: 24}
+
+To summarize, comprehension syntax can be used in the following objects and the enclosed characters represent what type it is:
+
+() => generators
+[] => lists
+{} => sets
+{:} => dictionaries
+
+Dictionaries are not sequences, but mappings. Mappings are collections of objects, but are stored by key instead of relative position. Dictionaries are mutable. Keys tend to be more mnemonic, or when the collection's items are named or labeled. 
+
+Indexing a dictionary by key is the fastest way to code a search in Python. 
+
+There are a few days to create dictionaries:
+
+1)
+>>> dict(name='Bob', job='dev', age=40)
+{'name': 'Bob', 'job': 'dev', 'age': 40}
+
+2)
+>>> dict(zip(['name', 'job', 'age'], ['Bob', 'dev', 40]))
+{'name': 'Bob', 'job': 'dev', 'age': 40}
+
+3)
+>>> D = {}
+>>> D['name']='Bob'
+>>> D['job']='dev'
+>>> D['age']=40
+>>> D
+{'name': 'Bob', 'job': 'dev', 'age': 40}
+
+Dictionaries can be nested also. 
+
+If lists are part of a dictionary, the list can be appended since it is a separate piece of memory from the dictionary that contains it. 
+
+Nesting allows the flexibility of core data types. Doing something similar in a low-level language like C would be tedious. We would have to declare and link everything together, and then worry about memory clean-up. In Python, we don't have to worry about creating space or cleaning up as we go. 
+
+To access a key in a dictionary, it's best to test for existence of such a key first:
+
+>>> 'f' in D 
+or
+>>> if not 'f' in D:
+        print('missing')
+
+If there we want to return a default value if the key doesn't exist, we can use the get method:
+
+>>> D.get('x',0)
+0
+
+which is the same as:
+
+>>> D['x'] if 'x' in D else 0
+0
+
+To get a list of keys:
+
+>>> list(D.keys())
+['name', 'job', 'age']
+
+There is a built-in sorted function that sorts the dictionary by its keys and returns a list:
+
+>>> sorted(D)
+['age', 'job', 'name']
+
+Compared to the for loops, while loops generally take more code to write.
+
+For loops work on all iterable objects. An object is iterable if it is either a physically stored sequence in memory, or an object that generates one item at a time in the context of an iteration operation (like a "virual" sequence). Both types of objects are iterable because they respond to the iter call with an object that advances when a call to next is made, and then raises an exception when the object finishes. Every tool that scans an object from left to right uses the iteration protocol. 
+
+Here is another example using comprehension that uses for and returns a list:
+
+>>> squares = [x*x for x in [1,2,3,4,5]]
+>>> squares
+[1, 4, 9, 16, 25]
+
+This is the same as:
+
+>>> squares = []
+>>> for x in [1,2,3,4,5]:
+...     squares.append(x*x)
+...
+>>> squares
+[1, 4, 9, 16, 25]
+
+It is likely though not guaranteed that the comprehension syntax will run faster than explicitly typing out the sequence in with a for loop. A rule of thumb is to code for readability and simplicity first, and then optimization afterwards. The for loop version also allows for multiline statements and expressions. Oftentimes, the simple and readable methods are fast enough for your needs. 
+
+Tuples are immutable sequences and are useful for larger programs where it's useful to constrain such data types. Otherwise, they are not as common as other sequences such as lists and arrays. You can't use the append method on tuples, for instance. You can create a new tuple from an old tuple like so:
+
+>>> T = (1,2,3,4)
+>>> T = (2,) + T[1:]
+>>> T
+(2, 2, 3, 4)
+
+To create a text output file, pass it's name and the 'w' processing mode into the open built-in function:
+
+>>> f = open('data.txt', 'w')
+>>> f.write("Hello\n')
+>>> f.close()
+
+To read the file, use the 'r' processing mode, then read the content into a string:
+
+>>> f = open('data.txt', 'r')
+>>> text = f.read()
+>>> print(text)
+
+Files provide an iterator that can read line by lin in for loops:
+
+>>> for line in open('data.txt'): print(line)
+
+Binary files usually include media files or data created by C programs, etc... Python has a struct module that can create and unpack packed binary data - raw bytes that record values that are not Python objects. 
+
+Python text automatically endcodes on writes and decodes on reads. 
+
+You can encode and decode manually if processing from a Unicode data source oter than a file, such as email or data over network. 
+
+Sets are also immutable objects, and are an unordered collection. They support the usual mathematical set operations. They are useful for determine unique elements, isolating differences, order-neutral equality tests, etc...
+
+Order-neutral equality test:
+>>> set('spam') == set('pmsa')
+True
+
+The type built-in function returns the object's class. A few ways to do type testing:
+
+type(L) == type([])
+
+type(L) == list
+
+isinstance(L, list)
+
+However, this is usually the wrong thing to do in Python, and is usually a sign of an ex-C programmer (haha - author's words, not mine). The idea is that if you do type testing, you limit your flexibility. I bet this is controversial (that last bit was my words, not the authors). 
+
+It is related to the idea of polymorphism. In Python, one codes to object interfaces, not to types. We care about what an object does, not what it is. Any object with a compatible interface should work, regardless of its specific type. 
+
+We extend software by writing new classes, not by changing what already works. 
