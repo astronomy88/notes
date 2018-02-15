@@ -687,3 +687,16 @@ However, this is usually the wrong thing to do in Python, and is usually a sign 
 It is related to the idea of polymorphism. In Python, one codes to object interfaces, not to types. We care about what an object does, not what it is. Any object with a compatible interface should work, regardless of its specific type. 
 
 We extend software by writing new classes, not by changing what already works. 
+
+14-feb-2018
+===========
+
+Chapter 5 - Numberic Types
+
+Data takes the form of objects. Numeric types include integeres, floating-point, complex number, and fixed-precision (decimal), fractions, ets, booleans, built-in functions and modules (pow, abs, round, math, random), expressions (unlimited integer precision, bitwise opeations, hex, octal, and binary), third-party extensions such as vectors, libraries, visualization, and plotting, objects.
+
+Integers can have unlimited precision, and grow to as many digits as the memory allows. Integers are written as strings of decimal digits.
+
+Built-in functions hex(I), oct(I), and bin(I) convert an integer to its representation string in these three bases. int(str, base) also converts to a specific base. 
+
+There are type-specific methods. For floating-point numbers, there's an "is_integer" method to test if the number is an integer, or "as_integer_ratio" to show the fraction number type. 
