@@ -699,4 +699,24 @@ Integers can have unlimited precision, and grow to as many digits as the memory 
 
 Built-in functions hex(I), oct(I), and bin(I) convert an integer to its representation string in these three bases. int(str, base) also converts to a specific base. 
 
-There are type-specific methods. For floating-point numbers, there's an "is_integer" method to test if the number is an integer, or "as_integer_ratio" to show the fraction number type. 
+There are type-specific methods. For floating-point numbers, there's an "is_integer" method to test if the number is an integer, or "as_integer_ratio" to show the fraction number type. "bit_length" gives the number of bits necessary to represent the number.
+
+16-feb-2018
+===========
+
+The "is" operator tests for value quality but also address in memory.
+
+The "lambda" creates an unnamed function.
+
+Some python expressions:
+
+yield x => Generator function send protocol
+lambda args: expression => anonymous function generation
+x if y else z
+x | y => bitwise OR, set union
+x ^ y = bitwise XOR, set symmetric differences
+x & y => bitwise AND, set intersection
+x // y => floor 
+~x => bitwise NOT (inversion)
+etc... 
+
