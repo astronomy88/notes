@@ -720,3 +720,79 @@ x // y => floor
 ~x => bitwise NOT (inversion)
 etc... 
 
+In Python 3, dividing two integers keeps the remainder. For instance,
+
+>>> 10/4
+2.5
+
+In Python 2, you can use the __future__ importer to get some functionality that is available in Python 3, such as the division operator returning remainders on integers. Normally, Python 2 would return an integer floor.
+
+One thing to note is that it is a floor division, not a truncating division. That means, flooring a negative number will round it down:
+
+>>> math.floor(-2.5)
+-3
+
+If you want to force the floor, use // instead.
+
+If truncation is truly desired, use the math.trunc method.
+
+This difference between Python 3 and Python 2 may break some Python 2 programs. Many programmers rely on division truncation because of the C language legacy. 
+
+When integers grow large, integer math operations take a little longer because Python does some extra work to support extended precision. 
+
+It is simple to change an integer's base to binary, octal, or hexadecimal. In all of these cases, the integer's value is the same in memory. For instance, the octal value 003777, the hex value 0xFF, and binary value 0b11111111 are all decimal 255, and they all are the same in value memory.
+
+To convert from decimal to other bases, one can use:
+oct(64), hex(64), or bin(64).
+
+The eval function treats strings as if they are Python code. It compiles and runs the string as a piece of the program. Care should be taken with this call because it can be used to overtake a machine.
+
+Bitwise operators:
+
+| bitwise OR
+& bitwise AND
+<< shift left
+^ bitwise XOR (either but not both)
+
+The general idea is that at a high-level language like Python, you're not likely to be dealing in bits. If so, you may need to question if you're using the right language, or if you should be using something like C.
+
+Here are some notes about the random module:
+
+>>> import random
+>>> random.random()
+0.045110277849689795
+>>> random.random()
+0.7275828610097722
+>>> random.randint(1, 10)
+3
+
+It can also choose an item at random:
+
+>>> suits = ['heart', 'spades', 'diamonds', 'clubs']
+>>> random.choice(suits)
+'heart'
+
+>>> random.shuffle(suits)
+>>> suits
+['clubs', 'diamonds', 'heart', 'spades']
+
+Decimal types are like floating-point types except they have a fixed number of decimal points. They are fixed-precision floating-point values. We can specify how many digits. It is good for better numeric accuracy because it represents fixed-precision values but keeps the accuracy as part of the characteristics of its type. In contrast, floating-point values have limited space to store values.
+
+To illustrate the point above, here's an example:
+
+>>> 0.1 + 0.1 + 0.1 - 0.3
+5.551115123125783e-17
+>>> from decimal import Decimal
+>>> Decimal('0.1') + Decimal('0.1') + Decimal('0.1') - Decimal('0.3')
+Decimal('0.0')
+
+Fraction types keep the numerator and denominator, and can avoid the inaccuracies and limitations of floating-point math. Their performance may not be as good because they do not map as closely to computer hardware as floating-point numbers. Here is an example in action:
+
+>>> from fractions import Fraction
+>>> x = Fraction(1, 3)
+>>> y = Fraction(4, 6)
+>>> x + y
+Fraction(1, 1)
+
+Sets - an item only appears once in a set, by definition. 
+
