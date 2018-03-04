@@ -720,6 +720,9 @@ x // y => floor
 ~x => bitwise NOT (inversion)
 etc... 
 
+3-march-2018
+============
+
 In Python 3, dividing two integers keeps the remainder. For instance,
 
 >>> 10/4
