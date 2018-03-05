@@ -720,6 +720,26 @@ x // y => floor
 ~x => bitwise NOT (inversion)
 etc... 
 
+When using [...], it's a list literal or a list comprehension, which is implied loop.
+
+X < Y < Z is the same as X < Y and Y < Z.
+
+Mixed operators follow order of operations, but it's just probably best practice to include paranthesis for best practices.
+
+If adding two different numeric types, like an integer and a floating-point number, the result will be the more "complicated" one. Python will convert both types to the more complicated of the two, and the result will be the complicated type.
+
+This automatic conversion usually just happens between numeric types - a string and integer can't be added together, for instance.
+
+All Python operators can be overloaded by Python classes. For instance, classes can be added with x+y expressions, or indexed with x[i], etc... This is a property called polymorphism. It means that the definition of an operator depends on the types it is dealing with.
+
+Variables are created when they are first assigned values. They are replaced with their values when used in an expression. They have to be assigned before being used in expressions. Variables refer to objects and are never declared ahead of time. Unlike in languages like C or Java, you don't have to predeclare variables in Python before using them - they just have to be assigned.
+
+This is unexpected, but is due to limitations of number of bits where floating-point numbers cannot represent some values:
+
+>>> 1.1 + 2.2 == 3.3
+False
+
+
 3-march-2018
 ============
 
