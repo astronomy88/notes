@@ -886,3 +886,76 @@ Here's something interesting:
 
 Numeric extensions such as NumPy can offer advanced numeric tools, such as matrix data type, vector processing, and sophisticated computation libraries. Python with NumPy can get good performance with Python language and its libraries. 
 
+12-march-2018
+=============
+
+Chapter 6
+
+You don't declare variables ahead of time - types are determined at runtime.
+
+A variable is created when it is first assigned a value. The notion of the type is with the object, not the names. Variables always refer to a particular object at a particular point in time. Variables must be assigned before they can be used. 
+
+When you go a = 3, Python does these steps:
+
+1) Create an object to represent the value 3.
+
+2) Create the variable a, if it does not yet exist.
+
+3) Link the variable a to the new object 3.
+
+Variables always link to other objects and never to other variables. Objects may link to other objects, such as a list object can have links to the objects it contains. In the example above, variable a becomes a reference to the object 3. The variable is a pointer to the object's memory space that is created by running the literal expression 3.
+
+Variables are entries in a system table, with spaces for links to objects.
+
+Objects are pieces of allocated memory, with enough space to represent the values for which they stand.
+
+References are automatically followed pointers from variables to objects.
+
+For optimization, Python internally caches and resuses certain kinds of unchangeable objects, such as small integers and strings. Each object is a distinct piece of memory, and each expression's result value is a distinct object. 
+
+Each object has more space than to just represent their values - they have two standard header fields - a type designator to mark the type of the object, and a reference counter, to say when it's possible to reclaim the object. 
+
+Consider the following example:
+
+a = 3
+a = 'spam'
+a = 1.23
+
+Traditionally, it appears like the type of a is changing from integer to string to floating-point number. However, names like a have no types. Types live with the objects. a is just changing its reference to different objects. We haven't changed the type of the variable a, we've made the variable reference a differet type of object. All we can say about a variable is that it represents a particular object at a particular point in time. 
+
+Objects, as mentioned before, contains a header field that tags the object with its type. For instance, the integer object 3 will contain a designator that tells Python that the object is an integer, or in other words, will contain a pointer to an object called int - the name of the integer type. 'spam' has type designator that points to the string type called str. Objects know their types, so variables don't have to.
+
+When a name (or variable) is assigned to a new object, the space held by the prior object is reclaimed as long as it is not references by another name or object. This automatic reclaimation is garbage collection. 
+
+Reclamation happens when the reclaim counter drops to zero - everytime an variable references that object, the reclaim counter increments. When the object no longer as a variable referencing it, the reclaim counter goes to 0, and the object's memory space is reclaimed. 
+
+Consider the following scenario, known as a shared reference, or a shared object:
+
+a = 3
+b = a
+
+A variable can't link to another variable - only to an object. Thus, a and b are both referencing the object 3. b is really a pointer to the objec'ts memory space created by running the literal expression 3.
+
+Now consider this:
+
+a = 3
+b = a 
+a = 'spam'
+
+In the end here, b references 3 still, and a references a new object, 'spam'. Remember, a variable can never reference another variable. 
+
+Python variables are always pointers to objects. Setting a variable to a new value causes the variable to reference an entirely different object. 
+
+There are objects and operations that perform in-place object changes - which are Python's mutable types. These include lists, dictionaries, and sets. This is where shared references can make things less trivial.
+
+For instance, a change from one name may impact others. Objects may seem to change for no apparent reason. All assignments are based on references, including function argument passing.  
+
+The following example illustrates the point:
+
+L1 = [2, 3, 4]
+L2 = L1
+L1[0] = 24
+
+L1 is [24, 3, 4], but so is L2!
+
+We haven't changed L1 - just a component of the object that l1 references. 
