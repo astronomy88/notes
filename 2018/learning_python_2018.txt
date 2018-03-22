@@ -958,4 +958,69 @@ L1[0] = 24
 
 L1 is [24, 3, 4], but so is L2!
 
-We haven't changed L1 - just a component of the object that l1 references. 
+We haven't changed L1 - just a component of the object that L1 references. Since L2 references the same object, L2 will also be pointing to that changed list.
+
+21-march-2018
+=============
+
+If you don't want this behavior, you can ask Python to copy the objects instead of making references. There are many ways to copy a list:
+
+>>> L1 = [2,3,4]
+>>> L2 = L1[:]
+>>> L1[0] = 24
+>>> L1
+[24, 3, 4]
+>>> L2
+[2, 3, 4]
+
+Doing the slicing makes L2 reference a copy of the object that L1 references, and not the original object. Slicing-copy technique only works with lists, and not sets or dictionaries. For those other, you can use the copy method, or pass the original boject to their type names, like dict or set.
+
+The standard copy library:
+
+>>> import copy
+>>> X = copy.copy(Y) # -- top-level "shallow" copy of any object Y
+>>> X = copy.deepcopy(Y) # -- deep copy of any object Y: copy all nested parts
+
+Objects that can be changed in place (mutable) are open to these kind of reference assignment gotchas. Such objects include lists, dictionaries, sets, and other objects defined with class statements. 
+
+Revisting garbage collection, there are some objects that aren't reclaimed, such as the literal small integer object 42, which is going to remain in a system table to be reused next time a 42 is generated in the code. Most objects are reclaimed immediately though. 
+
+Because of the reference model, there are two different ways to check for equality:
+
+>>> L = [1, 2, 3]
+>>> M = L
+>>> L == M
+True
+>>> L is M
+True
+
+The == technique tests whether the two referenced objects have the same values. This is the method used for equality checks. The 'is' technique tests for object identity, and returns True of both names point to exactly the same object. 'is' is a much stronger form of equality testing and is rarely applied in most programs. Example:
+
+>>> L = [1, 2, 3]
+>>> M = [1, 2, 3]
+>>> L == M
+True
+>>> L is M
+False
+
+But small integers and strings are cached and reused, so they can point to the same object even though you might assign a different variable. See here:
+
+>>> X = 42
+>>> Y = 42
+>>> X == Y
+True
+>>> X is Y
+True
+
+You can ask Python how many references there are to an object, using getrefcount.
+
+>>> import sys
+>>> sys.getrefcount(1)
+747
+
+747 pointers to 1.
+
+This caching and reuse is lower level, and not typically relevant to your code (unless you are often using 'is'!) Numbers and strings are immutable, so it doesn't matter how many references there are to the same object, every reference is to the same unchanging value. This is how Python its model optmizes for speed.
+
+The key pont of this chapter is that a variable can never reference another variable, only an object!
+
