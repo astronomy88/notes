@@ -1024,3 +1024,7 @@ This caching and reuse is lower level, and not typically relevant to your code (
 
 The key pont of this chapter is that a variable can never reference another variable, only an object!
 
+23-march-2018
+=============
+
+Strings are an ordered collection of characters.
