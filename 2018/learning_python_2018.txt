@@ -1024,3 +1024,95 @@ This caching and reuse is lower level, and not typically relevant to your code (
 
 The key pont of this chapter is that a variable can never reference another variable, only an object!
 
+Unicode discussion will be delayed until Chapter 37, but it is used almost everywhere. 
+
+This chapter will deal with the fundamental str type, which handles ASCII text, and is the same in all Python versions. Str also handles Unicode in Python 3.
+
+ASCII is a simple form of Unicode text, but only one of many possible encodings. 
+
+Similar to C, strings are character arrays, but unlike C, they are a high-level tool than arrays. They come with a powerful set of processing tools. Also unlike C, there is no distinct type like char for single-characters - you just use one-character strings in Python.
+
+Python strings are immutable - so the characters are in positional order and cannot be changed in place. 
+
+Empty strings are written as a pair of quotations marks, single or double. Strings support expression operations such as concatenation,slicing, indexing, etc...
+
+>>> S = ''
+>>> S = "spam's"
+>>> S = 's\np\ta\x00m'
+>>> S = """...multiline..."""
+>>> S = r'\temp\spam' #-- This is raw strings (no escapes)
+>>> B = b'sp\xc4m'
+>>> U = u'sp\u00c4m'
+>>> U
+'spÄm'
+
+A few ways to format strings:
+
+>>> text = "hello"
+>>> "a %s parrot" % text
+'a hello parrot'
+
+>>> "a {0} parrot".format(text)
+'a hello parrot'
+
+rstrip() is removing whitespace. 
+endswith('spam') tests for words at the end.
+
+The chapter covers many of the commonly used tools, but not exhaustive. 
+
+For Python strings, single and double quotes are the same. The reason for having both is that you can embed a quote character of the other variety inside a string without escaping with a backslash. 
+
+The book prefers to use single quotes around strings, because they are a little easier to read, except in cases where the single quote is embedded in the string. It's a purely subjective choice, though Python displays strings this way too, and most Python programmers do too, so you should probably do it.
+
+You actually dont' need to put a + to do concatenation - although it might be helpful to do so explicitly so it's easier to read. Implicity concatenation is just using a space:
+
+>>> 'hi ' 'bye'
+'hi bye'
+
+Wrapping things in paranthesis also allows content to span multiple lines. Adding a comma between the string creates a tuple. 
+
+Python displays strings as single quote, unless the string contains an embedded single quote, then it will output double quotes:
+
+>>> 'knights'
+'knights'
+>>> 'knight\'s'
+"knight's"
+
+Backslashes are used to introduce special character codings known as escape sequences. 
+
+26-march-2018
+=============
+
+The character \ and one or more characters following it in a string literal - are replaced with a single character in the resulting string object:
+
+>>> s = 'a\nb\tc'
+>>> s
+'a\nb\tc'
+>>> print(s)
+a
+b       c
+
+The print function interprets them, and the interactive echo shows the special characters as escapes.
+
+The len function returns the actual number of characters in the string, regardless of how its coded or displayed:
+
+>>> len(s)
+5
+
+In ASCII-text world, this might mean "5 bytes", but it's not. "Bytes" has no meaning in the Unicode world - string object is probably larger in memory in Python.
+
+String content and length reflect "code points", which are identifying numbers in Unicode-speak, where a single character does not necessarily map directly to a single byte, either when encoded in files or stored in memory. 
+
+In Python 3, str strings are sequences of Unicode code points, not bytes. There's more information on this later in Chapter 37 - on how strings are stored internally. Think characters instead of bytes in strings. 
+
+The backslash is not stored with the string in memory - they are only used to describe the speical character values to be stored. 
+
+Some escape sequences can embed absolute binary values into the characters. Here's a five-char string that embeds two characters with binary zero values (coded as octal escapes of one digit):
+
+>>> s = 'a\0b\0c'
+>>> s
+'a\x00b\x00c'
+>>> len(s)
+5
+
+In Python, a zero (null) character does not terminate a string the way a null byte does in C. Python keeps both string's length and text in memory. No character terminates a string in Python.
