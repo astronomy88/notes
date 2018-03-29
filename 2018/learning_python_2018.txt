@@ -1121,3 +1121,120 @@ Some escape sequences can embed absolute binary values into the characters. Here
 5
 
 In Python, a zero (null) character does not terminate a string the way a null byte does in C. Python keeps both string's length and text in memory. No character terminates a string in Python.
+
+Here is a string with absolute binary escape codes, a binary 1 and 2 coded in octal, followed by a binary 3 coded hexadecimal.
+
+>>> s = '\001\002\x03'
+>>> s
+'\x01\x02\x03'
+>>> len(s)
+3
+
+Python always displays nonprintable characters in hex, as seen above, no matter how they're specified.
+
+It's OK to process binary files that contain binary byte vales - files return strings of raw bytes from the external file. 
+
+If Python doesn't recognize the character after \ as a valid escape code, it keeps the backslash in the string:
+
+>>> x = 'c:\py\code'
+>>> x
+'c:\\py\\code'
+
+This is generally not recommended since you might do an escape sequence on accident. Use double backslashes: \\ (escape the original one), or use raw strings as discussed next.
+
+An example of when to use raw strings is coding filenames as strings, for instance, the intention is clear in the following, but it won't work as expected:
+
+>>> x = 'c:\new\text.dat'
+>>> print(x)
+c:
+ew      ext.dat
+
+It's better to use raw strings, retains the backslashes literally, exactly as you type them:
+
+>>> x = r'C:\new\text.dat'
+>>> x
+'C:\\new\\text.dat'
+>>> print(x)
+C:\new\text.dat
+
+As a reminder, the default interactive prompt prints the results as if they were code, and so escapes backslashes in the output. The print statement is more user-friendly. 
+
+Raw strings are commonly used for regular expressions. 
+
+The gotcha is that when raw strings end with a single backslash, Python expects you to escape it:
+
+>>> x = r'hello\'
+  File "<stdin>", line 1
+    x = r'hello\'
+                ^
+SyntaxError: EOL while scanning string literal
+>>> x = r'hello\\'
+>>> x
+'hello\\\\'
+
+Triple quotes using single or double quotes can be used to support multiline text data:
+
+>>> mantra = """Always look
+... on the bright
+... side of life."""
+>>> mantra
+'Always look\non the bright\nside of life.'
+
+Here is a way to add comments to a string, but newlines must explicitly be stated:
+
+>>> menu = (
+... "spam\n" # -- comments ignored
+... "eggs\n" # -- new lines not automatic
+... )
+>>> menu
+'spam\neggs\n'
+
+Triple-quoted strings are also used for documentation strings - they are string literals that are taken as comments when they appear at specific points in the file. They don't have to be triple quotes, but usually are to allow for multiline comments. 
+
+Triple-quoted strings are sometimes used to comment out, or temporarily disable, many lines of code. 
+
+>>> x = 1
+>>> """
+... x = 2
+... """
+'\nx = 2\n'
+>>> print(x)
+1
+
+Doing it the way above actually makes strings out of the "disabled block" of code. It will probably not affect performance too much, but it wasn't the intention - still, people do use it sometimes. 
+
+Python doesn't allow to mix numbers and strings in + expressions. You have to explicitly convert objects to strings.
+
+"in" returns a Boolean result for a substring:
+
+>>> 'ello' in 'hello'
+True
+
+Python offsets start at 0 and end at 1 less than the length of the string. Unlike C, you can feth items using negative offsets. Negative offsets are added to the length of the string to get the positive offset.
+
+>>> test = 'hello'
+>>> test[-1]
+'o'
+
+Python slicing is left includsive and right noninclusive. For instance, text[a:b], it will include text[a] all the way to text[b-1]. Like so:
+
+>>> text = 'hello'
+>>> text[2:4]
+'ll'
+
+If the bounds are omitted, it defaults to 0 on the left, and the length of the string on the right.
+
+>>> text[:3]
+'hel'
+>>> text[3:]
+'lo'
+>>> text[:-1]
+'hell'
+
+The last example is really just shorthand for:
+
+>>> text[:len(text)-1]
+'hell'
+
+As a reminder, assigning something as text[:] makes a copy of the string.
+
