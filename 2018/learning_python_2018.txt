@@ -1317,3 +1317,29 @@ Here's something interesting:
 >>> ord('5') - ord('0')
 5
 
+5-april-2018
+============
+
+Here's a blog post that goes into an algorithm for converting binary to int:
+http://www.haroldnguyen.com/blog/2018/04/converting-binary-to-integer/
+
+Also, the book mentions that left-shift operator is the same as multiplication. So, if I = 3, then I << 1 is 6. How does that work? Let's see.
+
+2^3 + 2^2 = 8 + 4 = 12
+2^4 + 2^3 = 16 + 8 = 24
+
+Indeed, it multiplied the original value by 2. What happened here ?
+
+We'll, let's multiply the first line by 2:
+
+2 * (2^3 + 2^2) = 2^4 + 2^3.
+
+Now it is clear that left-shifting means you're multiply by two. If you left shift again, you're multiply the original by 2^2, and so on.
+
+If you want to multiply by a number that is not a power of two, say 17, then it would be something like this:
+
+2^4 + 1 = 16 + 1
+So you left-shift 4 times, and add the original number.
+N * (2^4 + 1) = N(16 + 1) = (N << 4) + N
+
+Fascinating!
