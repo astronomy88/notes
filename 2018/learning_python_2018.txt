@@ -1343,3 +1343,90 @@ So you left-shift 4 times, and add the original number.
 N * (2^4 + 1) = N(16 + 1) = (N << 4) + N
 
 Fascinating!
+
+22-april-2018
+=============
+
+Here's an example of using string formatting:
+
+>>> 'yo testing %d string formatting %s' % (1, 'dude')
+'yo testing 1 string formatting dude'
+
+This creates a new string object - not a modified one (sticking with the immutable string theme).
+
+You can use the string method version as well:
+
+>>> 'hey {0} look its another {1} so go get it {2}'.format('buddy', 'birdy', 'champ')
+'hey buddy look its another birdy so go get it champ'
+
+Bytearray objects are not really text strings - they are sequences of small, 8-bit integers, and can be changed in place (mutable). They suppot many of the same operations as normal strings.
+
+Methods are attributes attached to objects that happen to reference callable functions. Method calls combine two operations at once - an attribute fetch and a call.
+
+Attribute fetches are of the form 'object.attribute'. This means fetch the value of attribute in object.
+
+Call expressions is of the form function(arguments), which invokes the code of function, passing in zero or more comma-separated argument objects to it, and return result value.
+
+When you call: object.method(arguments), Python will fetch the method of the object, and then call it while passing in both object and the arguments. In other words, call method to process object with arguments.
+
+This is true for both built-in types and user-defined classes.
+
+There are a lot of String methods, and I'm sure you'll get used to the more common ones as you practice more :) so I won't list them out here. The following section does list some of the more common methods.
+
+>>> S = 'spammy'
+>>> S.replace('mm', 'xx')
+'spaxxy'
+
+Remember, S did not change since strings are immutable. The previous method returned a new string.
+
+>>> S
+'spammy'
+
+>>> S.find('m')
+3
+
+The find method returns the offset of the first found string searching from the beginning, and will return -1 if it's not there.
+
+If you want to use a lot of formatting to a string by using a lot of methods, perhaps changing to a mutable data type can make the process more efficient, such as changing to a list of chars.
+
+>>> L = list(S)
+>>> L
+['s', 'p', 'a', 'm', 'm', 'y']
+
+This is called "exploding" the characters of a string into a list.
+
+Once the changes are done, you can "implode" the list back into a string:
+
+>>> ''.join(L)
+'spammy'
+
+Join is a string method, and the above is a method on an empty string object. Joining might be more efficient than concatenating individually.
+
+Split command will create a list based on a delimiter - default is whitespace:
+
+>>> line = 'aaa bbb   ccc'
+>>> line.split()
+['aaa', 'bbb', 'ccc']
+
+You can also use the built-in help method to check out a method's manual:
+
+>>> help(S.find)
+
+Help on built-in function find:
+
+find(...) method of builtins.str instance
+    S.find(sub[, start[, end]]) -> int
+
+    Return the lowest index in S where substring sub is found,
+    such that sub is contained within S[start:end].  Optional
+    arguments start and end are interpreted as in slice notation.
+
+    Return -1 on failure.
+(END)
+
+None of the String methods accept regexes - to do so, one must use other libraries, such as the Python re standard library for instance. There is another version that is maintained by Google, and it's called re2.
+
+Older versions of Python (before 3.X) use the string module, and contains a lot of the same methods just discussed. We only mention it here because it might show up in legacy code, but the habit moving forward should be to avoid them. It would look something like this:
+
+string.replace(S, '+', 'spam')
+
