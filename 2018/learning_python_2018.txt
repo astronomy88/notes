@@ -1430,3 +1430,133 @@ Older versions of Python (before 3.X) use the string module, and contains a lot 
 
 string.replace(S, '+', 'spam')
 
+13-may-2018
+===========
+
+String formatting examples:
+
+>>> 'That is %d %s bird!' % (1, 'high')
+'That is 1 high bird!'
+
+All types of objects should work with the %s conversion code. So you can really just use %s:
+
+>>> '%s -- %s -- %s' % (42, 3.14159, [1,2,3])
+'42 -- 3.14159 -- [1, 2, 3]'
+
+Here's the general structure for converstion targets:
+
+%[(keyname)][flags][width][.precision]typecode
+
+The keyname is used for indexing the dictionary used on the right side of the expression.
+
+Flags can be like left justification (-), numeric sign (+), blank before positive numbers and a - for negatives (a space), and zero fills (0).
+
+If you don't need these extra tools, a simple %s can be sufficient. These tools come in handy when you care about formatting, or don't want the precision to get too crazy.
+
+>>> x = 1234
+>>> res = 'integers: ...%d...%-6d...%06d' % (x, x, x)
+>>> res
+'integers: ...1234...1234  ...001234'
+
+More examples:
+
+>>> x = 1.23456789
+>>> '%e | %f | %g' % (x, x, x)
+'1.234568e+00 | 1.234568 | 1.23457'
+>>> '%-6.2f | %05.2f | %+06.1f' % (x, x, x)
+'1.23   | 01.23 | +001.2'
+
+If sizes aren't known until runtime, a * can be used to force their values to be taken from the next item in the inputs to the right of the % operator - consider the 4 in the following, which gives the following number it's precision:
+
+>>> '%f, %.2f, %.*f' % (1/3.0, 1/3.0, 4, 1/3.0)
+'0.333333, 0.33, 0.3333'
+
+Here is the keyname dictionary in action, using the triple quotes for multiline formatting:
+
+>>> values = {'name': 'Bob', 'age': 40}
+>>> reply = """
+... Greetings...
+... Hello %(name)s!
+... Your age is %(age)s
+... """
+>>> print(reply % values)
+
+Greetings...
+Hello Bob!
+Your age is 40
+
+Another way to do this is with the vars() method, which hold all the current vairables in memory as a dictionary:
+
+>>> food = 'spam'
+>>> qty = 10
+>>> vars()
+{'__name__': '__main__', '__doc__': None, '__package__': None, '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': None, '__annotations__': {}, '__builtins__': <module 'builtins' (built-in)>, 'x': 1.23456789, 'res': 'integers: ...1234...1234  ...001234', 'values': {'name': 'Bob', 'age': 40}, 'reply': '\nGreetings...\nHello %(name)s!\nYour age is %(age)s\n', 'food': 'spam', 'qty': 10}
+>>> '%(qty)d more %(food)s' % vars()
+'10 more spam'
+
+The string formatting method calls use curly braces to substitute targets to be inserted by position {1}, keyword {food}, or relative position {}.
+
+It can also be nested a bit:
+
+>>> import sys
+>>> 'My {1[kind]} runs {0.platform}'.format(sys, {'kind': 'laptop'})
+'My laptop runs darwin'
+
+Something that came up in one of the examples here is the * operator. For instance:
+
+>>> somelist = list('SPAM')
+>>> parts = somelist[0], somelist[-1], somelist[1:3]
+>>> parts
+('S', 'M', ['P', 'A'])
+>>> 'first={0}, last={1}, middle={2}'.format(*parts)
+"first=S, last=M, middle=['P', 'A']"
+
+*parts unpacks a tuple's items into individual function arguments - more on this in a future chapter becaues it really doesn't make sense to me here yet. But you have to add the * or it won't work:
+
+>>> 'first={0}, last={1}, middle={2}'.format(parts)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+IndexError: tuple index out of range
+
+And it seems like you ahve to make it as an argument in a method. Standalone gives an error:
+
+>>> *parts
+  File "<stdin>", line 1
+SyntaxError: can't use starred expression here
+
+Here is the format structure of what can appear as a substitution target:
+
+{fieldname component !conversionflag :formatspec}
+
+  - fieldname is optional number or keyword identifying an argument
+  - component is a string of zero or more .name or [index] references used to fetch attributes and indexed values of the argument
+  - conversionflag starts with a ! if present, followed by r, s, or a to call repr, str, or ascii built-in functions
+  - formatspec starts with a : if present, followed by text that specifies how the value should be presented, including field width, alignment, padding, precision, etc...
+
+The formatspec alone has a rich format:
+
+[[fill]align][sign][#][0][width][,][.precision][typecode]
+
+fill can be any fill character other than { or }
+align is <. >, =, or ^, for left alignment, right alignment, padding after a sign character, or centered alignment. For example,
+
+>>> '{0:>10} = {1:<10}'.format('spam', 123.4567)
+'      spam = 123.4567  '
+
+>>> '{0:f}, {1:.2f}, {2:06.2f}'.format(3.14159, 3.14159, 3.14159)
+'3.141590, 3.14, 003.14'
+
+You can also call the built-in format function outright:
+
+>>> format(1.2345, '.2f')
+'1.23'
+
+As an aside from this book, there is a new f-string in Python 3 that is used much like Ruby. It's like this:
+
+>>> name = 'Fred'
+>>> age = '30'
+>>> f'his name is {name} and he is {age} years old.'
+'his name is Fred and he is 30 years old.'
+
+This method is much less verbose than other methods. 
+
